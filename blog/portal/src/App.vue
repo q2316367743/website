@@ -1,28 +1,68 @@
 <template>
 	<div id="app" @scroll="appScroll($event)">
 		<div :class="{ topT: isT, topS: !isT }" v-show="showTop">
-			<div style="display: flex;flex-flow: row nowrap;justify-content: space-between;">
+			<div
+				style="
+					display: flex;
+					flex-flow: row nowrap;
+					justify-content: space-between;
+				"
+			>
 				<div>
-					<div class="logo" :class="{'nav-item-a': scrollOver}">
+					<div class="logo" :class="{ 'nav-item-a': scrollOver }">
 						<router-link tag="a" to="/">落雨不悔的博客</router-link>
 					</div>
 				</div>
-				<div>
-					<ul class="nav" :class="{'nav-item-a': scrollOver}">
-						<li class="nav-item">
-              <router-link tag="a" to="/">首页</router-link>
+				<div v-show="!isSm">
+					<ul class="nav" :class="{ 'nav-item-a': scrollOver }">
+						<li class="nav-item" to="/">
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="#icon-zhuye"></use>
+							</svg>
+							<span>首页</span>
 						</li>
-						<li class="nav-item">
-							<a href="javascript:;">时间轴</a>
+						<li class="nav-item" to="shijianzhou">
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="#icon-shijianzhou"></use>
+							</svg>
+							<a href="javascript:;"> 时间轴</a>
 						</li>
-						<li class="nav-item">
-							<a href="javascript:;">归档</a>
+						<li class="nav-item" to="tag">
+							<svg
+								class="icon"
+								aria-hidden="true"
+								style="font-size: 16px"
+							>
+								<use xlink:href="#icon-biaoqian"></use>
+							</svg>
+							<a href="javascript:;"> 标签</a>
 						</li>
-						<li class="nav-item">
-							<a href="javascript:;">分类</a>
+						<li class="nav-item" to="classify">
+							<svg class="icon" aria-hidden="true">
+								<use
+									xlink:href="#icon-leimupinleifenleileibie"
+								></use>
+							</svg>
+							<a href="javascript:;"> 分类</a>
 						</li>
-            <span id="bar"></span>
+						<li class="nav-item" to="about">
+							<svg
+								class="icon"
+								aria-hidden="true"
+								style="font-size: 18px"
+							>
+								<use xlink:href="#icon-mingpian-copy"></use>
+							</svg>
+							<a href="javascript:;"> 关于作者</a>
+						</li>
 					</ul>
+				</div>
+				<div v-show="isSm" style="padding: 0 20px">
+					<i
+						class="el-icon-menu"
+						style="font-size: 20px; cursor: pointer"
+						@click="openMenu"
+					></i>
 				</div>
 			</div>
 		</div>
@@ -34,10 +74,49 @@
 			@click="fixbarClick"
 			:style="{ right: fixbarX + 'px' }"
 		></div>
+		<div class="footer" align="center">
+			<div>©2020 - 2021 By Esion</div>
+		</div>
+
+		<!-- 回到顶部 -->
+		<el-backtop
+			target="#app"
+			:bottom="0"
+			:right="200"
+			style="
+				border-radius: 0%;
+				background-color: transparent;
+				box-shadow: 0 0 0;
+			"
+			v-if="!isSm"
+		>
+			<div class="backtop">
+				<svg
+					class="icon"
+					aria-hidden="true"
+					style="font-size: 40px; color: #c71d23"
+				>
+					<use xlink:href="#icon-huidaodingbu-shixin"></use>
+				</svg>
+			</div>
+		</el-backtop>
+		<el-backtop target="#app" v-if="isSm"></el-backtop>
+
+		<!-- 侧边菜单 -->
+		<el-drawer
+			:visible.sync="monuShow"
+			direction="rtl"
+			:show-close="false"
+			size="250"
+		>
+			<div style="width: 205px">我来啦!</div>
+		</el-drawer>
 	</div>
 </template>
 
 <script>
+import $ from "jquery";
+
 export default {
 	name: "App",
 	data() {
@@ -48,8 +127,10 @@ export default {
 			targetTop: true,
 			isTop: true,
 			isT: true,
-      showTop: true,
-      scrollOver: false,
+			showTop: true,
+			scrollOver: false,
+			isSm: false,
+			monuShow: false,
 		};
 	},
 	mounted() {
@@ -71,7 +152,25 @@ export default {
 			},
 		});
 		// this.audio.play();
-    this.audio.hideLoading();
+		this.audio.hideLoading();
+
+		let that = this;
+		// 增加事件
+		$(".nav-item").on("click", function (e) {
+			let to = $(e.currentTarget).attr("to");
+			let href = window.location.href.split("#")[1];
+			// 特殊情况：首页
+			if (to == "/") {
+				if (href != "/") {
+					that.$router.push("/");
+					return;
+				}
+			}
+
+			if (href.indexOf(to) < 0) {
+				that.$router.push($(e.currentTarget).attr("to"));
+			}
+		});
 	},
 	methods: {
 		fixbarClick() {
@@ -84,8 +183,8 @@ export default {
 		appScroll(e) {
 			this.isTop = e.target.scrollTop == 0;
 			this.targetTop = e.target.scrollTop - this.scrollTop < 0;
-      this.scrollTop = e.target.scrollTop;
-      this.scrollOver = e.target.scrollTop > 60;
+			this.scrollTop = e.target.scrollTop;
+			this.scrollOver = e.target.scrollTop > 60;
 			if (this.scrollOver) {
 				if (this.targetTop) {
 					if (!this.isTop) {
@@ -99,13 +198,10 @@ export default {
 				this.showTop = true;
 				this.isT = true;
 			}
-    },
-    mouseUp(e){
-      console.log(e.currentTarget.offsetLeft)
-    },
-    mouseOut(e){
-      console.log(e.currentTarget)
-    }
+		},
+		openMenu() {
+			this.monuShow = true;
+		},
 	},
 };
 </script>
@@ -114,7 +210,7 @@ export default {
 #fixbar {
 	position: fixed;
 	bottom: 50px;
-	z-index: 999999;
+	z-index: 999;
 	width: 55px;
 	height: 55px;
 	margin-bottom: 1px;
@@ -155,31 +251,31 @@ export default {
 	width: 100%;
 	height: 60px;
 	line-height: 60px;
-  background-color: transparent;
-  color: #ffffff;
+	background-color: transparent;
+	color: #ffffff;
 }
-.topT .nav .nav-item a{
-  color: #ffffff;
+.topT .nav .nav-item a {
+	color: #ffffff;
 }
-.topT .logo a{
-  color: #ffffff;
+.topT .logo a {
+	color: #ffffff;
 }
 .topS {
 	position: fixed;
 	top: 0px;
 	left: 0px;
-	z-index: 9999;
+	z-index: 999;
 	width: 100%;
 	height: 60px;
-  line-height: 60px;
-  background: rgba(255, 255, 255, 0.8);
-  color: #000000;
+	line-height: 60px;
+	background: rgba(255, 255, 255, 0.8);
+	color: #000000;
 }
-.topS .nav-item a{
-  color: #000000;
+.topS .nav-item a {
+	color: #000000;
 }
-.topS .logo a{
-  color: #000000;
+.topS .logo a {
+	color: #000000;
 }
 
 .logo {
@@ -195,7 +291,6 @@ export default {
 	position: relative;
 	padding: 0 20px;
 	background: transparent;
-	color: #fff;
 	border-radius: 2px;
 	font-size: 0;
 }
@@ -207,6 +302,7 @@ export default {
 	line-height: 60px;
 	list-style: none;
 	padding: 0px 20px;
+	cursor: pointer;
 }
 .nav a {
 	text-decoration: none;
@@ -215,8 +311,35 @@ export default {
 	color: #49b1f5;
 }
 
-.bar{
-  height: 5px;
-  color: #49b1f5;
+/*利用:before实现下划线宽度从0-100%*/
+li:before {
+	content: "";
+	position: absolute;
+	top: -5px;
+	width: 0;
+	height: 100%;
+	border-bottom: 5px solid #49b1f5;
+	transition: 0.2s all linear; /*动画效果*/
+	right: 100%; /*下划线从右侧开始显示*/
+}
+li:hover:before {
+	right: 0; /*鼠标滑过时，下划线从右向左移动*/
+	width: 100%; /*同时，下划线宽度从0-100%*/
+}
+li:hover ~ li:before {
+	/*~ 选择器：查找指定元素后面的所有兄弟结点*/
+	left: 0; /*处于hover后面元素的下划线从左侧开始显示*/
+}
+
+.footer {
+	color: #ffffff;
+	padding: 40px;
+}
+.backtop {
+	height: 100%;
+	width: 100%;
+	text-align: center;
+	line-height: 40px;
+	color: #1989fa;
 }
 </style>
