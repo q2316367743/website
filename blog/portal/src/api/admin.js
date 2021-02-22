@@ -53,3 +53,28 @@ export function getWebInfo(success) {
         }
     })
 }
+
+
+export function getBaseInfo(success) {
+    success({
+        success: true,
+        code: 200,
+        message: 'success',
+        data: {
+            item: {
+                background: './image/background.jpg',
+                music: [{
+                    src: 'https://music.163.com/song/media/outer/url?id=458333550.mp3',
+                    imageurl: 'http://p3.music.126.net/cTEm__BYVBwNyPwzUg7ZfA==/109951162856342375.jpg?param=300y300',
+                    name: 'Start',
+                    singer: 'Childsion'
+                }, {
+                    src: 'https://music.163.com/song/media/outer/url?id=20744788.mp3',
+                    imageurl: 'http://p3.music.126.net/SmlOg2u7RvopE1fQCUr7qw==/3228166139193288.jpg?param=300y300',
+                    name: 'With An Orchid',
+                    singer: 'Yanni'
+                }]
+            }
+        }
+    })
+}

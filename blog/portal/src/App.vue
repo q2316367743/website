@@ -109,13 +109,59 @@
 			:show-close="false"
 			size="250"
 		>
-			<div style="width: 205px">我来啦!</div>
+			<div style="width: 205px; text-align: left">
+				<div style="margin-top: 80px">
+					<ul class="nav" :class="{ 'nav-item-a': scrollOver }">
+						<li class="nav-item" to="/">
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="#icon-zhuye"></use>
+							</svg>
+							<span>首页</span>
+						</li>
+						<li class="nav-item" to="shijianzhou">
+							<svg class="icon" aria-hidden="true">
+								<use xlink:href="#icon-shijianzhou"></use>
+							</svg>
+							<a href="javascript:;"> 时间轴</a>
+						</li>
+						<li class="nav-item" to="tag">
+							<svg
+								class="icon"
+								aria-hidden="true"
+								style="font-size: 16px"
+							>
+								<use xlink:href="#icon-biaoqian"></use>
+							</svg>
+							<a href="javascript:;"> 标签</a>
+						</li>
+						<li class="nav-item" to="classify">
+							<svg class="icon" aria-hidden="true">
+								<use
+									xlink:href="#icon-leimupinleifenleileibie"
+								></use>
+							</svg>
+							<a href="javascript:;"> 分类</a>
+						</li>
+						<li class="nav-item" to="about">
+							<svg
+								class="icon"
+								aria-hidden="true"
+								style="font-size: 18px"
+							>
+								<use xlink:href="#icon-mingpian-copy"></use>
+							</svg>
+							<a href="javascript:;"> 关于作者</a>
+						</li>
+					</ul>
+				</div>
+			</div>
 		</el-drawer>
 	</div>
 </template>
 
 <script>
 import $ from "jquery";
+import { getBaseInfo } from "@/api/admin";
 
 export default {
 	name: "App",
@@ -131,26 +177,62 @@ export default {
 			scrollOver: false,
 			isSm: false,
 			monuShow: false,
+			baseInfo: {
+				background: "",
+			},
+			musicIndex: 0,
+			musicCount: 0,
 		};
 	},
-	mounted() {
-		this.audio = new window.Daudio({
-			ele: "#fixbar",
-			src:
-				"https://m10.music.126.net/20210221173615/add65f517c4fcd7b899390ecf048305a/ymusic/f951/b64f/c711/3bacec351bec1bce69d981103de663ec.mp3",
-			imageurl:
-				"http://p4.music.126.net/aGIyB5JJ7gn5wE1UjzIsNA==/109951162849021467.jpg?param=300y300",
-			name: "CX",
-			singer: "LevitateXC",
-			showprogress: true,
-			initstate: "cricle",
-			next: function () {
-				// this.audio.checkAudio(src, imageurl, name, singer)
-			},
-			ended: function () {
-				// this.audio.checkAudio(src, imageurl, name, singer)
-			},
+	created() {
+		//获取基本信息
+		getBaseInfo((res) => {
+			if (res.success) {
+				this.baseInfo = res.data.item;
+			}
 		});
+	},
+	mounted() {
+		if (this.baseInfo.music.length > 0) {
+			this.musicCount = this.baseInfo.music.length;
+			let that = this;
+			this.audio = new window.Daudio({
+				ele: "#fixbar",
+				src: this.baseInfo.music[0].src,
+				imageurl: this.baseInfo.music[0].imageurl,
+				name: this.baseInfo.music[0].name,
+				singer: this.baseInfo.music[0].singer,
+				showprogress: true,
+				initstate: "cricle",
+				next: function () {
+					if (that.musicIndex < that.musicCount - 1) {
+						that.musicIndex = that.musicIndex + 1;
+					} else {
+						that.musicIndex = 0;
+					}
+					that.audio.checkAudio(
+						that.baseInfo.music[that.musicIndex].src,
+						that.baseInfo.music[that.musicIndex].imageurl,
+						that.baseInfo.music[that.musicIndex].name,
+						that.baseInfo.music[that.musicIndex].singer
+					);
+				},
+				ended: function () {
+					if (that.musicIndex < that.musicCount - 1) {
+						that.musicIndex = that.musicIndex + 1;
+					} else {
+						that.musicIndex = 0;
+					}
+					that.audio.checkAudio(
+						that.baseInfo.music[that.musicIndex].src,
+						that.baseInfo.music[that.musicIndex].imageurl,
+						that.baseInfo.music[that.musicIndex].name,
+						that.baseInfo.music[that.musicIndex].singer
+					);
+				},
+			});
+		}
+
 		// this.audio.play();
 		this.audio.hideLoading();
 
@@ -171,6 +253,10 @@ export default {
 				that.$router.push($(e.currentTarget).attr("to"));
 			}
 		});
+		$("#app").css(
+			"background-image",
+			"url(" + this.baseInfo.background + ")"
+		);
 	},
 	methods: {
 		fixbarClick() {
@@ -201,6 +287,24 @@ export default {
 		},
 		openMenu() {
 			this.monuShow = true;
+			let that = this;
+			setTimeout(() => {
+				$(".nav-item").on("click", function (e) {
+					let to = $(e.currentTarget).attr("to");
+					let href = window.location.href.split("#")[1];
+					// 特殊情况：首页
+					if (to == "/") {
+						if (href != "/") {
+							that.$router.push("/");
+							return;
+						}
+					}
+
+					if (href.indexOf(to) < 0) {
+						that.$router.push($(e.currentTarget).attr("to"));
+					}
+				});
+			}, 100);
 		},
 	},
 };
@@ -218,7 +322,6 @@ export default {
 	cursor: pointer;
 }
 #app {
-	background-image: url(./assets/image/background.jpg);
 	width: 100%;
 	height: 100%;
 	top: 0px;
