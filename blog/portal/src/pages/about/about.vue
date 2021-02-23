@@ -5,7 +5,9 @@
 				<div>关于自己</div>
 			</div>
 		</div>
-		<el-col :span="12" :offset="6">
+		<el-col :span="6" :xs="1" :sm="2" :md="3" :lg="4" :xl="5" style="min-height:1px;">
+			</el-col>
+		<el-col :span="12" :xs="22" :sm="20" :md="18" :lg="16" :xl="12">
 			<el-card shadow="always">
 				<div class="title">落雨不悔</div>
 				<div class="content">
@@ -16,7 +18,7 @@
 					</p>
 					<p>🌍地址：目前在湖北孝感。</p>
 					<p>
-						📧邮箱：<a href="m17762618644@163.com"
+						📧邮箱：<a href="mailto:m17762618644@163.com"
 							>m17762618644@163.com</a
 						>
 					</p>
@@ -29,7 +31,7 @@
 					<h1>本项目开源情况</h1>
 					<div>
                         <h2>Gitee</h2>
-						<div id="osc-gitee-widget-tag"></div>
+						<div id="osc-gitee-widget-tag" style="width: 600px;max-width: 100%"></div>
                         <h2>Github</h2>
                         <img title="https://github.com/anuraghazra/github-readme-stats" src="https://github-readme-stats.vercel.app/api/pin/?username=q2316367743&repo=website" />
 					</div>
@@ -72,6 +74,9 @@ export default {
 </script>
 
 <style>
+img{
+	max-width: 100%;
+}
 #about-main {
 	text-align: center;
 	font-size: 40px;
