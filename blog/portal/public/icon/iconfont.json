@@ -20,6 +20,13 @@
       "unicode_decimal": 58905
     },
     {
+      "icon_id": "5264197",
+      "name": "音乐",
+      "font_class": "yinle",
+      "unicode": "e5a8",
+      "unicode_decimal": 58792
+    },
+    {
       "icon_id": "6477303",
       "name": "标签",
       "font_class": "biaoqian",
@@ -27,18 +34,18 @@
       "unicode_decimal": 58628
     },
     {
-      "icon_id": "7618522",
-      "name": "回到顶部-实心",
-      "font_class": "huidaodingbu-shixin",
-      "unicode": "e75c",
-      "unicode_decimal": 59228
-    },
-    {
       "icon_id": "9967920",
       "name": "公告",
       "font_class": "gonggao",
       "unicode": "e60d",
       "unicode_decimal": 58893
+    },
+    {
+      "icon_id": "10810819",
+      "name": "置顶",
+      "font_class": "zhiding",
+      "unicode": "e60e",
+      "unicode_decimal": 58894
     },
     {
       "icon_id": "14560240",

@@ -40,9 +40,8 @@ export function getWebInfo(success) {
                 tagCount: 22,
                 classifyCount: 3,
                 notices: [
-                    '关于',
-                    '关于',
-                    '关于'
+                    '<a href="https://www.baidu.com">百度</a>',
+                    '网站测试通知，预祝网站成功完成',
                 ],
                 runTime: '1',
                 personCount: 2,
@@ -64,15 +63,15 @@ export function getBaseInfo(success) {
             item: {
                 background: './image/background.jpg',
                 music: [{
-                    src: 'https://music.163.com/song/media/outer/url?id=458333550.mp3',
-                    imageurl: 'http://p3.music.126.net/cTEm__BYVBwNyPwzUg7ZfA==/109951162856342375.jpg?param=300y300',
+                    url: 'https://music.163.com/song/media/outer/url?id=458333550.mp3',
+                    cover: 'http://p3.music.126.net/cTEm__BYVBwNyPwzUg7ZfA==/109951162856342375.jpg?param=300y300',
                     name: 'Start',
-                    singer: 'Childsion'
+                    artist: 'Childsion'
                 }, {
-                    src: 'https://music.163.com/song/media/outer/url?id=20744788.mp3',
-                    imageurl: 'http://p3.music.126.net/SmlOg2u7RvopE1fQCUr7qw==/3228166139193288.jpg?param=300y300',
+                    url: 'https://music.163.com/song/media/outer/url?id=20744788.mp3',
+                    cover: 'http://p3.music.126.net/SmlOg2u7RvopE1fQCUr7qw==/3228166139193288.jpg?param=300y300',
                     name: 'With An Orchid',
-                    singer: 'Yanni'
+                    artist: 'Yanni'
                 }]
             }
         }

@@ -60,7 +60,7 @@
 				<div v-show="isSm" style="padding: 0 20px">
 					<i
 						class="el-icon-menu"
-						style="font-size: 20px; cursor: pointer"
+						style="font-size: 20px; cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer"
 						@click="openMenu"
 					></i>
 				</div>
@@ -68,39 +68,35 @@
 		</div>
 		<router-view></router-view>
 
-		<!-- 固定块 -->
-		<div
-			id="fixbar"
-			@click="fixbarClick"
-			:style="{ right: fixbarX + 'px' }"
-		></div>
-		<div class="footer" align="center">
+		<!-- 底部 -->
+		<div id="fixbar"></div>
+		<el-col :span="24" class="footer" align="center">
 			<div>©2020 - 2021 By Esion</div>
-		</div>
+		</el-col>
 
 		<!-- 回到顶部 -->
 		<el-backtop
 			target="#app"
-			:bottom="0"
-			:right="200"
+			:bottom="40"
+			:right="8"
 			style="
 				border-radius: 0%;
 				background-color: transparent;
 				box-shadow: 0 0 0;
+				width: 30px;
+				height: 30px;
 			"
-			v-if="!isSm"
 		>
 			<div class="backtop">
-				<svg
-					class="icon"
-					aria-hidden="true"
-					style="font-size: 40px; color: #c71d23"
-				>
-					<use xlink:href="#icon-huidaodingbu-shixin"></use>
-				</svg>
+				<i class="el-icon-top"></i>
 			</div>
 		</el-backtop>
-		<el-backtop target="#app" v-if="isSm"></el-backtop>
+		<!-- 设置音乐显示 -->
+		<fixbar target="#app" :bottom="70" :right="8" @click="isShowMusic()">
+			<div class="backtop">
+				<span class="iconfont icon-yinle"></span>
+			</div>
+		</fixbar>
 
 		<!-- 侧边菜单 -->
 		<el-drawer
@@ -110,7 +106,7 @@
 			size="250"
 		>
 			<div style="width: 205px; text-align: left">
-				<div style="margin-top: 80px">
+				<div style="margin-top: 10%">
 					<ul class="nav" :class="{ 'nav-item-a': scrollOver }">
 						<li class="nav-item" to="/">
 							<svg class="icon" aria-hidden="true">
@@ -162,12 +158,18 @@
 <script>
 import $ from "jquery";
 import { getBaseInfo } from "@/api/admin";
+import fixbar from "@/components/fixbar";
+
+import "aplayer/dist/APlayer.min.css";
+import APlayer from "aplayer";
 
 export default {
 	name: "App",
+	components: {
+		fixbar,
+	},
 	data() {
 		return {
-			fixbarX: 100,
 			audio: null,
 			scrollTop: 0,
 			targetTop: true,
@@ -180,8 +182,7 @@ export default {
 			baseInfo: {
 				background: "",
 			},
-			musicIndex: 0,
-			musicCount: 0,
+			showMusic: true,
 		};
 	},
 	created() {
@@ -193,48 +194,12 @@ export default {
 		});
 	},
 	mounted() {
-		if (this.baseInfo.music.length > 0) {
-			this.musicCount = this.baseInfo.music.length;
-			let that = this;
-			this.audio = new window.Daudio({
-				ele: "#fixbar",
-				src: this.baseInfo.music[0].src,
-				imageurl: this.baseInfo.music[0].imageurl,
-				name: this.baseInfo.music[0].name,
-				singer: this.baseInfo.music[0].singer,
-				showprogress: true,
-				initstate: "cricle",
-				next: function () {
-					if (that.musicIndex < that.musicCount - 1) {
-						that.musicIndex = that.musicIndex + 1;
-					} else {
-						that.musicIndex = 0;
-					}
-					that.audio.checkAudio(
-						that.baseInfo.music[that.musicIndex].src,
-						that.baseInfo.music[that.musicIndex].imageurl,
-						that.baseInfo.music[that.musicIndex].name,
-						that.baseInfo.music[that.musicIndex].singer
-					);
-				},
-				ended: function () {
-					if (that.musicIndex < that.musicCount - 1) {
-						that.musicIndex = that.musicIndex + 1;
-					} else {
-						that.musicIndex = 0;
-					}
-					that.audio.checkAudio(
-						that.baseInfo.music[that.musicIndex].src,
-						that.baseInfo.music[that.musicIndex].imageurl,
-						that.baseInfo.music[that.musicIndex].name,
-						that.baseInfo.music[that.musicIndex].singer
-					);
-				},
-			});
-		}
-
-		// this.audio.play();
-		this.audio.hideLoading();
+		new APlayer({
+			container: document.getElementById("fixbar"),
+			fixed: true,
+			loop: 'all',
+			audio: this.baseInfo.music,
+		});
 
 		let that = this;
 		// 增加事件
@@ -259,13 +224,6 @@ export default {
 		);
 	},
 	methods: {
-		fixbarClick() {
-			if (this.fixbarX == 100) {
-				this.fixbarX = 240;
-			} else {
-				this.fixbarX = 100;
-			}
-		},
 		appScroll(e) {
 			this.isTop = e.target.scrollTop == 0;
 			this.targetTop = e.target.scrollTop - this.scrollTop < 0;
@@ -306,21 +264,57 @@ export default {
 				});
 			}, 100);
 		},
+		isShowMusic() {
+			this.showMusic = !this.showMusic;
+			this.showMusic ? $("#fixbar").show() : $("#fixbar").hide();
+		},
 	},
 };
 </script>
 
 <style>
-#fixbar {
-	position: fixed;
-	bottom: 50px;
-	z-index: 999;
-	width: 55px;
-	height: 55px;
-	margin-bottom: 1px;
-	text-align: center;
-	cursor: pointer;
+/* 全局样式 */
+*::selection {
+    color:#FFFFFF;
+    background-color:#30C2B4;
+    text-shadow:none;
 }
+*::-moz-selection {
+    color:#FFFFFF;
+    background-color:#30C2B4;
+    text-shadow:none;
+}
+a {
+	color: #14d1b2;
+	text-decoration: none;
+}
+*::-webkit-scrollbar {
+	width: 8px;
+	height: 8px;
+}
+*::-webkit-scrollbar-thumb {
+	background-color: #49b1f5;
+	background-image: -webkit-linear-gradient(
+		45deg,
+		rgba(255, 255, 255, 0.4) 25%,
+		transparent 25%,
+		transparent 50%,
+		rgba(255, 255, 255, 0.4) 50%,
+		rgba(255, 255, 255, 0.4) 75%,
+		transparent 75%,
+		transparent
+	);
+}
+*::-webkit-scrollbar-track {
+	background-color: transparent;
+}
+* {
+	cursor: url(http://119.29.7.47/assets/pointer/base.png), default;
+}
+a {
+	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+}
+
 #app {
 	width: 100%;
 	height: 100%;
@@ -334,16 +328,6 @@ export default {
 #app {
 	width: 100%;
 	height: 100%;
-}
-*::-webkit-scrollbar {
-	width: 8px;
-	height: 8px;
-}
-*::-webkit-scrollbar-thumb {
-	background: #49b1f5;
-}
-*::-webkit-scrollbar-track {
-	background-color: transparent;
 }
 
 /* 布局 */
@@ -405,7 +389,7 @@ export default {
 	line-height: 60px;
 	list-style: none;
 	padding: 0px 20px;
-	cursor: pointer;
+	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
 }
 .nav a {
 	text-decoration: none;
@@ -415,7 +399,7 @@ export default {
 }
 
 /*利用:before实现下划线宽度从0-100%*/
-li:before {
+.nav-item:before {
 	content: "";
 	position: absolute;
 	top: -5px;
@@ -425,11 +409,11 @@ li:before {
 	transition: 0.2s all linear; /*动画效果*/
 	right: 100%; /*下划线从右侧开始显示*/
 }
-li:hover:before {
+.nav-item:hover:before {
 	right: 0; /*鼠标滑过时，下划线从右向左移动*/
 	width: 100%; /*同时，下划线宽度从0-100%*/
 }
-li:hover ~ li:before {
+.nav-item:hover ~ .nav-item:before {
 	/*~ 选择器：查找指定元素后面的所有兄弟结点*/
 	left: 0; /*处于hover后面元素的下划线从左侧开始显示*/
 }
@@ -442,7 +426,8 @@ li:hover ~ li:before {
 	height: 100%;
 	width: 100%;
 	text-align: center;
-	line-height: 40px;
-	color: #1989fa;
+	line-height: 30px;
+	color: #ffffff;
+	background-color: #1989fa;
 }
 </style>
