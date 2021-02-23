@@ -61,7 +61,7 @@ export function getBaseInfo(success) {
         message: 'success',
         data: {
             item: {
-                background: './image/background.jpg',
+                background: 'http://119.29.7.47/image/background.jpg',
                 music: [{
                     url: 'https://music.163.com/song/media/outer/url?id=458333550.mp3',
                     cover: 'http://p3.music.126.net/cTEm__BYVBwNyPwzUg7ZfA==/109951162856342375.jpg?param=300y300',

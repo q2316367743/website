@@ -1,18 +1,18 @@
 server:
-  port: 8010
+  port: 8000
 
 spring:
   application:
-    name: blog-portal
+    name: base
   profiles:
     active: @spring.active@
   cloud:
     nacos:
       discovery:
-        namespace: blog
+        namespace: website
         server-addr: localhost:8848
       config:
-        namespace: blog
+        namespace: website
         group: @spring.active@
         name: ${spring.application.name}
         server-addr: localhost:8848

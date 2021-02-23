@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esion.personal.base.mapper.ConfigBlogMapper">
+
+    <resultMap id="configBlogMap" type="com.esion.personal.base.entity.ConfigBlog">
+        <id column="id" property="id"/>
+        <result column="create_time" property="createTime"/>
+        <result property="background" column="background"/>
+        <collection property="music" ofType="com.esion.personal.base.entity.MusicInfo" column="music_id">
+            <result property="url" column="url"/>
+            <result property="cover" column="cover"/>
+            <result property="name" column="name"/>
+            <result property="artist" column="artist"/>
+        </collection>
+    </resultMap>
+
+    <select id="selectAll" resultMap="configBlogMap">
+        select tcb.*, tmi.url, tmi.cover, tmi.name, tmi.artist
+        from t_blog_music tbm
+                 right join (select *
+                             from t_config_blog
+                             order by create_time desc
+                             limit 1) tcb
+                            on tcb.id = tbm.blog_id
+                 left join t_music_info tmi
+                           on tmi.id = tbm.music_id
+    </select>
+</mapper>
