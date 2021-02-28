@@ -21,13 +21,13 @@
 							</svg>
 							<span>首页</span>
 						</li>
-						<li class="nav-item" to="shijianzhou">
+						<li class="nav-item" to="/shijianzhou">
 							<svg class="icon" aria-hidden="true">
 								<use xlink:href="#icon-shijianzhou"></use>
 							</svg>
 							<a href="javascript:;"> 时间轴</a>
 						</li>
-						<li class="nav-item" to="tag">
+						<li class="nav-item" to="/tag">
 							<svg
 								class="icon"
 								aria-hidden="true"
@@ -37,7 +37,7 @@
 							</svg>
 							<a href="javascript:;"> 标签</a>
 						</li>
-						<li class="nav-item" to="classify">
+						<li class="nav-item" to="/classify">
 							<svg class="icon" aria-hidden="true">
 								<use
 									xlink:href="#icon-leimupinleifenleileibie"
@@ -45,7 +45,7 @@
 							</svg>
 							<a href="javascript:;"> 分类</a>
 						</li>
-						<li class="nav-item" to="about">
+						<li class="nav-item" to="/about">
 							<svg
 								class="icon"
 								aria-hidden="true"
@@ -118,13 +118,13 @@
 							</svg>
 							<span>首页</span>
 						</li>
-						<li class="nav-item" to="shijianzhou">
+						<li class="nav-item" to="/shijianzhou">
 							<svg class="icon" aria-hidden="true">
 								<use xlink:href="#icon-shijianzhou"></use>
 							</svg>
 							<a href="javascript:;"> 时间轴</a>
 						</li>
-						<li class="nav-item" to="tag">
+						<li class="nav-item" to="/tag">
 							<svg
 								class="icon"
 								aria-hidden="true"
@@ -134,7 +134,7 @@
 							</svg>
 							<a href="javascript:;"> 标签</a>
 						</li>
-						<li class="nav-item" to="classify">
+						<li class="nav-item" to="/classify">
 							<svg class="icon" aria-hidden="true">
 								<use
 									xlink:href="#icon-leimupinleifenleileibie"
@@ -142,7 +142,7 @@
 							</svg>
 							<a href="javascript:;"> 分类</a>
 						</li>
-						<li class="nav-item" to="about">
+						<li class="nav-item" to="/about">
 							<svg
 								class="icon"
 								aria-hidden="true"

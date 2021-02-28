@@ -63,9 +63,12 @@ export default {
 				this.winHeight = winHeight;
 			});
 			$("#about-title").css("width", this.winWidth);
-			$("#about-title").css("height", this.winHeight / 4 - 46);
 			$("#about-main").css("width", this.winWidth);
-			$("#about-main").css("padding-top", this.winHeight / 2 - 192);
+			let h = this.winHeight / 3;
+			if (h > 152) {
+				$("#about-title").css("padding-top", h);
+				$("#about-main").css("height", h * 2 - 92);
+			}
 
 			this.$parent.isSm = this.winWidth < 768;
 		},
@@ -73,7 +76,7 @@ export default {
 };
 </script>
 
-<style>
+<style scoped>
 img{
 	max-width: 100%;
 }
