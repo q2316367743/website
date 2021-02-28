@@ -1,4 +1,4 @@
-package com.esion.personal.base.entity;
+package xyz.esion.personal.base.entity;
 
 import lombok.Getter;
 import lombok.Setter;

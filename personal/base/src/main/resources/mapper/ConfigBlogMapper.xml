@@ -4,11 +4,11 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esion.personal.base.mapper.ConfigBlogMapper">
 
-    <resultMap id="configBlogMap" type="com.esion.personal.base.entity.ConfigBlog">
+    <resultMap id="configBlogMap" type="xyz.esion.personal.base.entity.ConfigBlog">
         <id column="id" property="id"/>
         <result column="create_time" property="createTime"/>
         <result property="background" column="background"/>
-        <collection property="music" ofType="com.esion.personal.base.entity.MusicInfo" column="music_id">
+        <collection property="music" ofType="xyz.esion.personal.base.entity.MusicInfo" column="music_id">
             <result property="url" column="url"/>
             <result property="cover" column="cover"/>
             <result property="name" column="name"/>

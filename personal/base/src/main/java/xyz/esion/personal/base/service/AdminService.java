@@ -1,4 +1,4 @@
-package com.esion.personal.base.service;
+package xyz.esion.personal.base.service;
 
 
 import java.util.Map;

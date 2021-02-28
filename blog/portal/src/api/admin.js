@@ -1,27 +1,15 @@
-// import axios from '../utils/axios'
+import axios from '@/utils/axios'
 
 /**
  * 获取作者信息
  * 
  */
 export function getAdmin(success) {
-    success({
-        success: true,
-        code: 200,
-        message: 'success',
-        data: {
-            item: {
-                avatar: 'https://portrait.gitee.com/uploads/avatars/user/1786/5358547_qiaoshengda_1578985319.png!avatar200',
-                name: '落雨不悔',
-                describe: '主要是Java技术栈，略带部分源码，随笔',
-                gitee: 'https://gitee.com/qiaoshengda',
-                other: [{
-                    name: 'CSDN',
-                    icon: 'https://g.csdnimg.cn/static/logo/favicon32.ico',
-                    href: 'https://blog.csdn.net/q2316367743'
-                }]
-            }
-        }
+    axios({
+        url: 'base/admin',
+        method: 'GET',
+    }).then(res => {
+        success(res.data)
     })
 }
 
@@ -40,7 +28,7 @@ export function getWebInfo(success) {
                 tagCount: 22,
                 classifyCount: 3,
                 notices: [
-                    '<a href="https://www.baidu.com">百度</a>',
+                    '<a target="_blank" href="https://www.baidu.com">百度</a>',
                     '网站测试通知，预祝网站成功完成',
                 ],
                 runTime: '1',
@@ -55,25 +43,10 @@ export function getWebInfo(success) {
 
 
 export function getBaseInfo(success) {
-    success({
-        success: true,
-        code: 200,
-        message: 'success',
-        data: {
-            item: {
-                background: 'http://119.29.7.47/image/background.jpg',
-                music: [{
-                    url: 'https://music.163.com/song/media/outer/url?id=458333550.mp3',
-                    cover: 'http://p3.music.126.net/cTEm__BYVBwNyPwzUg7ZfA==/109951162856342375.jpg?param=300y300',
-                    name: 'Start',
-                    artist: 'Childsion'
-                }, {
-                    url: 'https://music.163.com/song/media/outer/url?id=20744788.mp3',
-                    cover: 'http://p3.music.126.net/SmlOg2u7RvopE1fQCUr7qw==/3228166139193288.jpg?param=300y300',
-                    name: 'With An Orchid',
-                    artist: 'Yanni'
-                }]
-            }
-        }
+    axios({
+        url: 'base/blog/config',
+        method: 'GET',
+    }).then(res => {
+        success(res.data)
     })
 }

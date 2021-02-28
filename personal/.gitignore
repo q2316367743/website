@@ -2,4 +2,6 @@
 *.iml
 target/*
 base/target/
-blog/portal/target
+blog/target
+common/target
+manage/target

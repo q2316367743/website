@@ -1,4 +1,4 @@
-package com.esion.personal.base.config;
+package xyz.esion.personal.base.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.config.CorsRegistry;

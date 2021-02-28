@@ -1,6 +1,6 @@
-package com.esion.personal.base.service;
+package xyz.esion.personal.base.service;
 
-import com.esion.personal.base.entity.ConfigBlog;
+import xyz.esion.personal.base.entity.ConfigBlog;
 
 /**
  * @author qiao shengda

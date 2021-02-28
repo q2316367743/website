@@ -1,8 +1,7 @@
-package com.esion.personal.base.controller;
+package xyz.esion.personal.base.controller;
 
-import com.esion.personal.base.entity.ConfigBlog;
-import com.esion.personal.base.mapper.ConfigBlogMapper;
-import com.esion.personal.common.view.R;
+import xyz.esion.personal.base.mapper.ConfigBlogMapper;
+import xyz.esion.personal.common.view.R;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;

@@ -10,7 +10,7 @@ spring:
     nacos:
       discovery:
         namespace: website
-        server-addr: localhost:8848
+        server-addr: 119.29.7.47:8848
       config:
         namespace: website
         group: @spring.active@

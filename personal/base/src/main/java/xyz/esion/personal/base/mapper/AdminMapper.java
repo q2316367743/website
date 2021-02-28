@@ -1,6 +1,4 @@
-package com.esion.personal.base.mapper;
-
-import com.esion.personal.base.entity.Admin;
+package xyz.esion.personal.base.mapper;
 
 import java.util.Map;
 

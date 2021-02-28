@@ -1,4 +1,4 @@
-package com.esion.personal.common.dao;
+package xyz.esion.personal.common.dao;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;

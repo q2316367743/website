@@ -14,6 +14,8 @@
     <modules>
         <module>blog</module>
         <module>base</module>
+        <module>common</module>
+        <module>manage</module>
     </modules>
 
     <packaging>pom</packaging>

@@ -1,4 +1,4 @@
-package com.esion.personal.common.view;
+package xyz.esion.personal.common.view;
 
 import java.util.HashMap;
 import java.util.Map;

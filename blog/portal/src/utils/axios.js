@@ -1,10 +1,9 @@
 import axios from 'axios'
 import { Message } from 'element-ui'
-import router from '../router/index'
 
 
 const instance = axios.create({
-    baseURL: 'http://localhost/api/blog/portal',
+    baseURL: 'http://119.29.7.47/api',
     timeout: 3000
 })
 

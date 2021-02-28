@@ -1,4 +1,4 @@
-package com.esion.personal.common.config;
+package xyz.esion.personal.common.config;
 
 import com.fasterxml.jackson.annotation.JsonAutoDetect;
 import com.fasterxml.jackson.annotation.PropertyAccessor;

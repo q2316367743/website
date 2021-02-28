@@ -1,6 +1,6 @@
-package com.esion.personal.base.mapper;
+package xyz.esion.personal.base.mapper;
 
-import com.esion.personal.base.entity.ConfigBlog;
+import xyz.esion.personal.base.entity.ConfigBlog;
 
 /**
  * @author qiao shengda

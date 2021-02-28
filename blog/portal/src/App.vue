@@ -60,7 +60,11 @@
 				<div v-show="isSm" style="padding: 0 20px">
 					<i
 						class="el-icon-menu"
-						style="font-size: 20px; cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer"
+						style="
+							font-size: 20px;
+							cursor: url(http://119.29.7.47/assets/pointer/link.png),
+								pointer;
+						"
 						@click="openMenu"
 					></i>
 				</div>
@@ -100,13 +104,13 @@
 
 		<!-- 侧边菜单 -->
 		<el-drawer
-			:visible.sync="monuShow"
+			:visible.sync="menuShow"
 			direction="rtl"
 			:show-close="false"
 			size="250"
 		>
-			<div style="width: 205px; text-align: left">
-				<div style="margin-top: 10%">
+			<div style="width: 205px; text-align: left;">
+				<div style="margin-top: 10%;margin-bottom: 100px;">
 					<ul class="nav" :class="{ 'nav-item-a': scrollOver }">
 						<li class="nav-item" to="/">
 							<svg class="icon" aria-hidden="true">
@@ -178,27 +182,52 @@ export default {
 			showTop: true,
 			scrollOver: false,
 			isSm: false,
-			monuShow: false,
+			menuShow: false,
 			baseInfo: {
 				background: "",
+				music: [],
 			},
 			showMusic: true,
 		};
 	},
-	created() {
+	mounted() {
 		//获取基本信息
 		getBaseInfo((res) => {
 			if (res.success) {
-				this.baseInfo = res.data.item;
+				let baseInfo = res.data.item;
+				new APlayer({
+					container: document.getElementById("fixbar"),
+					fixed: true,
+					loop: "all",
+					audio: baseInfo.music,
+				});
+				$("#app").css(
+					"background-image",
+					"url(" + baseInfo.background + ")"
+				);
+			} else {
+				const ap = new APlayer({
+					container: document.getElementById("fixbar"),
+					fixed: true,
+					loop: "all",
+					autoplay: true,
+					audio: [
+						{
+							artist: "Childsion",
+							cover:
+								"http://p3.music.126.net/cTEm__BYVBwNyPwzUg7ZfA==/109951162856342375.jpg?param=300y300",
+							name: "Start",
+							url:
+								"https://music.163.com/song/media/outer/url?id=458333550.mp3",
+						},
+					],
+				});
+				ap.play();
+				$("#app").css(
+					"background-image",
+					"url(http://119.29.7.47/image/background.jpg)"
+				);
 			}
-		});
-	},
-	mounted() {
-		new APlayer({
-			container: document.getElementById("fixbar"),
-			fixed: true,
-			loop: 'all',
-			audio: this.baseInfo.music,
 		});
 
 		let that = this;
@@ -206,6 +235,7 @@ export default {
 		$(".nav-item").on("click", function (e) {
 			let to = $(e.currentTarget).attr("to");
 			let href = window.location.href.split("#")[1];
+
 			// 特殊情况：首页
 			if (to == "/") {
 				if (href != "/") {
@@ -217,11 +247,8 @@ export default {
 			if (href.indexOf(to) < 0) {
 				that.$router.push($(e.currentTarget).attr("to"));
 			}
+
 		});
-		$("#app").css(
-			"background-image",
-			"url(" + this.baseInfo.background + ")"
-		);
 	},
 	methods: {
 		appScroll(e) {
@@ -244,12 +271,13 @@ export default {
 			}
 		},
 		openMenu() {
-			this.monuShow = true;
+			this.menuShow = true;
 			let that = this;
 			setTimeout(() => {
 				$(".nav-item").on("click", function (e) {
 					let to = $(e.currentTarget).attr("to");
 					let href = window.location.href.split("#")[1];
+					that.menuShow = false;
 					// 特殊情况：首页
 					if (to == "/") {
 						if (href != "/") {
@@ -275,14 +303,14 @@ export default {
 <style>
 /* 全局样式 */
 *::selection {
-    color:#FFFFFF;
-    background-color:#30C2B4;
-    text-shadow:none;
+	color: #ffffff;
+	background-color: #30c2b4;
+	text-shadow: none;
 }
 *::-moz-selection {
-    color:#FFFFFF;
-    background-color:#30C2B4;
-    text-shadow:none;
+	color: #ffffff;
+	background-color: #30c2b4;
+	text-shadow: none;
 }
 a {
 	color: #14d1b2;
@@ -429,5 +457,9 @@ a {
 	line-height: 30px;
 	color: #ffffff;
 	background-color: #1989fa;
+}
+
+.el-drawer{
+	overflow: auto !important;
 }
 </style>

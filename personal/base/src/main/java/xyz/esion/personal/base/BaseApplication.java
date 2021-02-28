@@ -1,4 +1,4 @@
-package com.esion.personal.base;
+package xyz.esion.personal.base;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -11,8 +11,8 @@ import org.springframework.context.annotation.ComponentScan;
  * @since 2021/2/23
  */
 @SpringBootApplication
-@MapperScan("com.esion.personal.base.mapper")
-@ComponentScan("com.esion.personal")
+@MapperScan("xyz.esion.personal.base.mapper")
+@ComponentScan("xyz.esion.personal")
 @EnableDiscoveryClient
 public class BaseApplication {
 

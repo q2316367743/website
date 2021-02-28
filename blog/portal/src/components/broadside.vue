@@ -5,7 +5,7 @@
 				<el-avatar :size="100" :src="admin.avatar"></el-avatar>
 			</div>
 			<div class="admin-name" v-text="admin.name"></div>
-			<div class="admin-describe" v-text="admin.describe"></div>
+			<div class="admin-describe" v-text="admin.description"></div>
 			<div class="admin-web">
 				<el-row type="flex" justify="space-between">
 					<el-col :span="8">
@@ -23,7 +23,8 @@
 							<div
 								v-text="webInfo.tagCount"
 								style="margin-top: 5px"
-							></div>
+							>
+							</div>
 						</router-link>
 					</el-col>
 					<el-col :span="8">
@@ -69,9 +70,29 @@
 				></div>
 			</div>
 		</el-card>
-		<el-card shadow="hover" class="card">分类</el-card>
-		<el-card shadow="hover" class="card">标签</el-card>
-		<el-card shadow="hover" class="card">归档</el-card>
+		<el-card shadow="hover" class="card">
+			<div class="card-title">
+				<i class="iconfont icon-biaoqian my-icon"></i>
+				<span>分类</span>
+			</div>
+            <div class="card-content"></div>
+		</el-card>
+		<el-card shadow="hover" class="card">
+			<div class="card-title">
+				<i class="iconfont icon-biaoqian my-icon"></i>
+				<span>标签</span>
+			</div>
+            <div class="card-content">
+			<wordCloud :datas="tags"></wordCloud>
+			</div>
+		</el-card>
+		<el-card shadow="hover" class="card">
+			<div class="card-title">
+				<i class="iconfont icon-biaoqian my-icon"></i>
+				<span>归档</span>
+			</div>
+            <div class="card-content"></div>
+		</el-card>
 		<el-card shadow="hover" class="card">
 			<div class="card-title">
 				<i class="my-icon el-icon-info"></i>
@@ -108,15 +129,20 @@
 </template>
 
 <script>
+import wordCloud from "@/components/wordCloud"
+import { getTags } from "@/api/base"
 import { getAdmin, getWebInfo } from "@/api/admin";
 
 export default {
+	components: {
+		wordCloud
+	},
 	data() {
 		return {
 			admin: {
 				avatar: "",
 				name: "",
-				describe: "",
+				description: "",
 				gitee: "",
 				other: [],
 			},
@@ -131,12 +157,18 @@ export default {
 				accessCount: 0,
 				lastUpdate: "",
 			},
+			tags: [],
 		};
 	},
 	created() {
 		getAdmin((res) => {
 			if (res.success) {
 				this.admin = res.data.item;
+				try{
+					this.admin.other = JSON.parse(this.admin.other);
+				}catch{
+					console.log('额外连接解析错误')
+				}
 			}
 		});
 		getWebInfo((res) => {
@@ -144,6 +176,11 @@ export default {
 				this.webInfo = res.data.item;
 			}
 		});
+		getTags(res=>{
+			if (res.success) {
+				this.tags = res.data.items;
+			}
+		})
 	},
 	methods: {
 		toA(target) {

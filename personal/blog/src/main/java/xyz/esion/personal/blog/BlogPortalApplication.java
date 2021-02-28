@@ -1,4 +1,4 @@
-package com.esion.personal.blog.portal;
+package xyz.esion.personal.blog;
 
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.SpringApplication;
@@ -13,10 +13,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  * @since 2021/2/21
  */
 @SpringBootApplication
+@MapperScan("xyz.esion.personal.blog.mapper")
+@ComponentScan("xyz.esion.personal")
 @EnableDiscoveryClient
-@ComponentScan("com.esion.personal.blog")
-@MapperScan("com.esion.personal.blog.portal.mapper")
-@EnableTransactionManagement
 @EnableFeignClients
 public class BlogPortalApplication {
 
