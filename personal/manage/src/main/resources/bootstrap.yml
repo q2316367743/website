@@ -1,0 +1,23 @@
+server:
+  port: 8000
+
+spring:
+  application:
+    name: base
+  profiles:
+    active: @spring.active@
+  cloud:
+    nacos:
+      discovery:
+        namespace: website
+        server-addr: 119.29.7.47:8848
+      config:
+        namespace: website
+        group: @spring.active@
+        name: ${spring.application.name}
+        server-addr: localhost:8848
+        file-extension: yml
+        shared-configs[0]:
+          data-id: application.yml
+          group: @spring.active@
+          refresh: true
