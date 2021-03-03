@@ -12,7 +12,9 @@
         "axios": "^0.21.1",
         "core-js": "^3.6.5",
         "element-ui": "^2.14.1",
+        "highlight.js": "^10.6.0",
         "jquery": "^3.5.1",
+        "layui-layer": "^1.0.9",
         "typeit": "^7.0.4",
         "vue": "^2.6.11",
         "vue-router": "^3.0.1"

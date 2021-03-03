@@ -109,8 +109,8 @@
 			:show-close="false"
 			size="250"
 		>
-			<div style="width: 205px; text-align: left;">
-				<div style="margin-top: 10%;margin-bottom: 100px;">
+			<div style="width: 205px; text-align: left">
+				<div style="margin-top: 10%; margin-bottom: 100px">
 					<ul class="nav" :class="{ 'nav-item-a': scrollOver }">
 						<li class="nav-item" to="/">
 							<svg class="icon" aria-hidden="true">
@@ -247,7 +247,6 @@ export default {
 			if (href.indexOf(to) < 0) {
 				that.$router.push($(e.currentTarget).attr("to"));
 			}
-
 		});
 	},
 	methods: {
@@ -340,6 +339,23 @@ a {
 	cursor: url(http://119.29.7.47/assets/pointer/base.png), default;
 }
 a {
+	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+}
+
+input {
+	cursor: url(http://119.29.7.47/assets/pointer/text.png), text;
+}
+
+img {
+	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	max-width: 100%;
+}
+
+button{
+	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer !important;
+}
+
+button span{
 	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
 }
 
@@ -459,7 +475,7 @@ a {
 	background-color: #1989fa;
 }
 
-.el-drawer{
+.el-drawer {
 	overflow: auto !important;
 }
 </style>
