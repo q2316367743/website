@@ -249,6 +249,12 @@ export default {
 			}
 		});
 	},
+	watch: {
+		$route() {
+			// 返回顶部
+			$("#app").animate({ scrollTop: "0px" }, 800);
+		},
+	},
 	methods: {
 		appScroll(e) {
 			this.isTop = e.target.scrollTop == 0;
@@ -351,11 +357,11 @@ img {
 	max-width: 100%;
 }
 
-button{
+button {
 	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer !important;
 }
 
-button span{
+button span {
 	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
 }
 

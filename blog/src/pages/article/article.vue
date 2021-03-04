@@ -176,7 +176,11 @@
 								>
 									<el-image
 										class="comment-image"
-										:src="'https://q2.qlogo.cn/headimg_dl?dst_uin=' + comment.email + ',1583720084,&spec=100'"
+										:src="
+											'https://q2.qlogo.cn/headimg_dl?dst_uin=' +
+											comment.email +
+											',1583720084,&spec=100'
+										"
 									></el-image>
 								</el-col>
 								<el-col :span="22" style="padding-left: 5px">
@@ -269,7 +273,10 @@
 									></div>
 								</el-col>
 							</el-row>
-							<el-row v-if="comment.reply" style="margin-top: 40px;">
+							<el-row
+								v-if="comment.reply"
+								style="margin-top: 40px"
+							>
 								<el-col
 									:span="2"
 									:offset="1"
@@ -280,7 +287,11 @@
 								>
 									<el-image
 										class="comment-image-reply"
-										:src="'https://q2.qlogo.cn/headimg_dl?dst_uin=' + comment.reply.email + ',1583720084,&spec=100'"
+										:src="
+											'https://q2.qlogo.cn/headimg_dl?dst_uin=' +
+											comment.reply.email +
+											',1583720084,&spec=100'
+										"
 									></el-image>
 								</el-col>
 								<el-col :span="21" style="padding-left: 5px">
@@ -370,10 +381,17 @@
 									<div style="margin-top: 10px">
 										<a :href="comment.reply.target.website">
 											<span>@</span>
-											<span v-text="comment.reply.target.nickname"></span>
+											<span
+												v-text="
+													comment.reply.target
+														.nickname
+												"
+											></span>
 										</a>
 										<span>, </span>
-										<span v-html="comment.reply.content"></span>
+										<span
+											v-html="comment.reply.content"
+										></span>
 									</div>
 								</el-col>
 							</el-row>
@@ -412,6 +430,24 @@ const highlightCode = () => {
 		});
 		isAdd = false;
 	}
+	console.log(preEl.length, isAdd);
+
+	preEl.forEach((pre) => {
+		pre.addEventListener("contextmenu", function (e) {
+			let text = e.currentTarget.innerText;
+			window.layer.open({
+				type: 1,
+				title: "代码",
+				content:
+					"<textarea id='copyCode' style='width: 99%;height: 97%;border-color: #ffffff;'> " +
+					text +
+					" </textarea>",
+				area: ["800px", "350px"],
+			});
+			$("#copyCode").select();
+			e.preventDefault();
+		});
+	});
 };
 
 export default {
@@ -469,14 +505,15 @@ export default {
 		window.onresize = this.getWindow;
 		// 增加复制监听器
 		document.addEventListener("copy", (e) => {
-			e.preventDefault();
-			e.stopPropagation();
 			let node = document.createElement("div");
 			// cloneContents方法把范围（Range）的内容复制到一个DocumentFragment对象
 			node.appendChild(
 				window.getSelection().getRangeAt(0).cloneContents()
 			);
 			let copyInfo = node.innerText;
+			if (e.path[0].value) {
+				return;
+			}
 			let link =
 				"\n\n\n文章作者：落雨不悔\n文章链接：http://localhost:8080/#/article/1\n版权声明：本博客所有文章除特别声明外，均采用 CC BY-NC-SA 4.0 许可协议。转载请注明来自 落雨不悔的博客！";
 			copyInfo = copyInfo + link;
@@ -486,6 +523,8 @@ export default {
 			} else if (window.clipboardData) {
 				return window.clipboardData.setData("text", copyInfo);
 			}
+			e.preventDefault();
+			e.stopPropagation();
 		});
 
 		// 构建评论
@@ -497,7 +536,7 @@ export default {
 					height: 180, //设置编辑器高度
 					hideTool: ["image"],
 				}); //建立编辑器
-				clearInterval(interval)
+				clearInterval(interval);
 			}
 		}, 100);
 		highlightCode();
@@ -531,6 +570,7 @@ export default {
 	},
 	destroyed() {
 		$("img").unbind("click");
+		isAdd = true;
 	},
 	methods: {
 		getWindow() {
