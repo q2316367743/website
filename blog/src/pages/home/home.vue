@@ -8,7 +8,7 @@
 			<div id="down">
 				<i
 					class="el-icon-arrow-down"
-					style="cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer"
+					style="cursor: url(http://esion.xyz/assets/pointer/link.png), pointer"
 					@click="downMain"
 				></i>
 			</div>
@@ -266,7 +266,7 @@ export default {
 }
 .item-img {
 	transition: all 0.6s;
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 .item:hover .item-img {
 	transform: scale(1.1);
@@ -288,7 +288,7 @@ export default {
 	-moz-transition: all 0.5s linear;
 	-o-transition: all 0.5s linear;
 	transition: all 0.5s linear;
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 	color: #49b1f5;
 }
 

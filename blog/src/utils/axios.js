@@ -3,7 +3,7 @@ import { Message } from 'element-ui'
 
 
 const instance = axios.create({
-    baseURL: 'http://119.29.7.47/api',
+    baseURL: 'http://esion.xyz/api',
     timeout: 3000
 })
 

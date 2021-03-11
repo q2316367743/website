@@ -62,7 +62,7 @@
 						class="el-icon-menu"
 						style="
 							font-size: 20px;
-							cursor: url(http://119.29.7.47/assets/pointer/link.png),
+							cursor: url(http://esion.xyz/assets/pointer/link.png),
 								pointer;
 						"
 						@click="openMenu"
@@ -225,7 +225,7 @@ export default {
 				ap.play();
 				$("#app").css(
 					"background-image",
-					"url(http://119.29.7.47/image/background.jpg)"
+					"url(http://esion.xyz/image/background.jpg)"
 				);
 			}
 		});
@@ -342,27 +342,27 @@ a {
 	background-color: transparent;
 }
 * {
-	cursor: url(http://119.29.7.47/assets/pointer/base.png), default;
+	cursor: url(http://esion.xyz/assets/pointer/base.png), default;
 }
 a {
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 
 input {
-	cursor: url(http://119.29.7.47/assets/pointer/text.png), text;
+	cursor: url(http://esion.xyz/assets/pointer/text.png), text;
 }
 
 img {
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 	max-width: 100%;
 }
 
 button {
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer !important;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer !important;
 }
 
 button span {
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 
 #app {
@@ -439,7 +439,7 @@ button span {
 	line-height: 60px;
 	list-style: none;
 	padding: 0px 20px;
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 .nav a {
 	text-decoration: none;

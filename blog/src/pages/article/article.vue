@@ -679,7 +679,7 @@ export default {
 	padding-left: 5px;
 }
 .share i:hover {
-	cursor: url(http://119.29.7.47/assets/pointer/link.png), pointer;
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 
 .comment {
