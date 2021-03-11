@@ -80,6 +80,9 @@ export default {
 img{
 	max-width: 100%;
 }
+h1{
+	padding: 10px 0px;
+}
 #about-main {
 	text-align: center;
 	font-size: 40px;

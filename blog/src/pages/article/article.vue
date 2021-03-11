@@ -125,7 +125,7 @@
 								<el-col :span="8">
 									<el-input
 										v-model="comment.nickname"
-										placeholder="昵称"
+										placeholder="昵称（必填）"
 									></el-input>
 								</el-col>
 								<el-col :span="8">
@@ -407,7 +407,7 @@
 import { findDimensions } from "@/utils/window";
 import $ from "jquery";
 import { getArticle } from "@/api/article";
-import { getComment } from "@/api/comment";
+import { getComment, addComment, addReply } from "@/api/comment";
 import hljs from "highlight.js";
 import "highlight.js/styles/dracula.css";
 
@@ -430,7 +430,6 @@ const highlightCode = () => {
 		});
 		isAdd = false;
 	}
-	console.log(preEl.length, isAdd);
 
 	preEl.forEach((pre) => {
 		pre.addEventListener("contextmenu", function (e) {
@@ -485,11 +484,14 @@ export default {
 		// 获取文章信息
 		this.href = window.location.href;
 		// 获取文章信息
-		getArticle((res) => {
+		getArticle(this.$route.params.id, (res) => {
 			if (res.success) {
 				this.article = res.data.article;
 				this.catalog = res.data.catalog;
 				this.createCatalog();
+			}else{
+				window.layer.alert('文章错误');
+				this.$router.go(-1);
 			}
 		});
 		getComment((res) => {
@@ -596,8 +598,38 @@ export default {
 		 * 提交评论
 		 */
 		submitComment() {
+			//判断是否填写信息
+			if (this.comment.nickname.length == 0) {
+				window.layer.msg("未填写昵称");
+				return;
+			}
+			if (this.comment.email.length == 0) {
+				window.layer.msg("未填写邮箱");
+				return;
+			}
 			this.comment.content = window.layedit.getContent(this.editIndex);
-			console.log(this.comment);
+			if (this.comment.content.length == 0) {
+				window.layer.msg("未填写内容");
+				return;
+			}
+			let appVersion = window.navigator.appVersion.split(" ");
+			let osVersion =
+				appVersion[1].substring(1, appVersion[1].length) +
+				" " +
+				appVersion[3].substring(0, appVersion[3].length - 1);
+			let browerVersion = appVersion[appVersion.length - 1];
+			this.comment.system = osVersion;
+			this.comment.brower = browerVersion;
+			addComment(this.comment, (res) => {
+				if (res.success) {
+					window.layer.msg("评论成功，审核中");
+					//重新构建编辑器
+					this.editIndex = window.layedit.build("comment", {
+						height: 180, //设置编辑器高度
+						hideTool: ["image"],
+					});
+				}
+			});
 			this.comment = {
 				nickname: "",
 				email: "",
@@ -617,7 +649,7 @@ export default {
 				content:
 					'<div class="layui-row">' +
 					'<div class="layui-col-md4">' +
-					'<input type="text" id="nickname" class="layui-input" placeholder="昵称">' +
+					'<input type="text" id="nickname" class="layui-input" placeholder="昵称（必填）">' +
 					"</div>" +
 					'<div class="layui-col-md4">' +
 					'<input type="text" id="email" class="layui-input" placeholder="邮箱（必填）">' +
@@ -643,6 +675,41 @@ export default {
 				let email = $("#email").val();
 				let website = $("#website").val();
 				let content = window.layedit.getContent(that.replyIndex);
+				if (length == 0) {
+					window.layer.msg("未填写昵称");
+					return;
+				}
+				if (email.length == 0) {
+					window.layer.msg("未填写邮箱");
+					return;
+				}
+				if (content.length == 0) {
+					window.layer.msg("未填写内容");
+					return;
+				}
+				let appVersion = window.navigator.appVersion.split(" ");
+				let osVersion =
+					appVersion[1].substring(1, appVersion[1].length) +
+					" " +
+					appVersion[3].substring(0, appVersion[3].length - 1);
+				let browerVersion = appVersion[appVersion.length - 1];
+				// 增加回复
+				addReply(
+					{
+						nickname: nickname,
+						email: email,
+						website: website,
+						content: content,
+						system: osVersion,
+						brower: browerVersion,
+						commentId: comment.id,
+					},
+					(res) => {
+						if (res.success) {
+							window.layer.msg("回复成功，审核中");
+						}
+					}
+				);
 				console.log(nickname, email, website, content);
 				window.layer.close(that.replyDialogIndex);
 				that.replyDialogIndex = -1;

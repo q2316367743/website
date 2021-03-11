@@ -38,7 +38,7 @@
 					</el-col>
 				</el-row>
 			</div>
-			<div class="admin-gitee" @click="toA(admin.gitee)">
+			<div class="admin-gitee" @click="toTarget(admin.gitee)">
 				<svg class="icon" aria-hidden="true">
 					<use xlink:href="#icon-mayun"></use>
 				</svg>
@@ -51,7 +51,7 @@
 					:src="other.icon"
 					:alt="other.name"
 					:title="other.name"
-					@click="toA(other.href)"
+					@click="toTarget(other.href)"
 				/>
 			</div>
 		</el-card>
@@ -75,7 +75,12 @@
 				<i class="iconfont icon-biaoqian my-icon"></i>
 				<span>分类</span>
 			</div>
-            <div class="card-content"></div>
+            <div class="card-content">
+				<div v-for="(item, index) in categorys" :key="index" class="category" @click="toA('/category/' + item.id)">
+					<div v-text="item.name"></div>
+					<div v-text="item.count"></div>
+				</div>
+			</div>
 		</el-card>
 		<el-card shadow="hover" class="card">
 			<div class="card-title">
@@ -85,13 +90,6 @@
             <div class="card-content">
 			<wordCloud :datas="tags"></wordCloud>
 			</div>
-		</el-card>
-		<el-card shadow="hover" class="card">
-			<div class="card-title">
-				<i class="iconfont icon-biaoqian my-icon"></i>
-				<span>归档</span>
-			</div>
-            <div class="card-content"></div>
 		</el-card>
 		<el-card shadow="hover" class="card">
 			<div class="card-title">
@@ -130,7 +128,7 @@
 
 <script>
 import wordCloud from "@/components/wordCloud"
-import { getTags } from "@/api/base"
+import { getTags, getCategory } from "@/api/base"
 import { getAdmin, getWebInfo } from "@/api/admin";
 
 export default {
@@ -158,6 +156,7 @@ export default {
 				lastUpdate: "",
 			},
 			tags: [],
+			categorys: []
 		};
 	},
 	created() {
@@ -181,11 +180,19 @@ export default {
 				this.tags = res.data.items;
 			}
 		})
+		getCategory(res=>{
+			if (res.success) {
+				this.categorys = res.data.items;
+			}
+		})
 	},
 	methods: {
-		toA(target) {
+		toTarget(target) {
 			window.open(target);
 		},
+		toA(href){
+			this.$router.push(href)
+		}
 	},
 };
 </script>
@@ -272,7 +279,7 @@ a {
 	margin-top: 20px;
 }
 .card-content div {
-	margin-top: 10px;
+	padding: 5px 0px;
 }
 
 .my-icon {
@@ -283,5 +290,17 @@ a {
     display: flex;
     flex-flow: row nowrap;
     justify-content: space-between;
+}
+
+.category{
+	display: flex;
+	justify-content: space-between;
+}
+.category>div{
+	padding: 5px 5px;
+}
+.category:hover{
+	background-color: rgba(0, 0, 0, 0.1);
+	cursor: url(http://esion.xyz/assets/pointer/link.png), pointer;
 }
 </style>

@@ -37,7 +37,7 @@
 							</svg>
 							<a href="javascript:;"> 标签</a>
 						</li>
-						<li class="nav-item" to="/classify">
+						<li class="nav-item" to="/category">
 							<svg class="icon" aria-hidden="true">
 								<use
 									xlink:href="#icon-leimupinleifenleileibie"
@@ -134,7 +134,7 @@
 							</svg>
 							<a href="javascript:;"> 标签</a>
 						</li>
-						<li class="nav-item" to="/classify">
+						<li class="nav-item" to="/category">
 							<svg class="icon" aria-hidden="true">
 								<use
 									xlink:href="#icon-leimupinleifenleileibie"
@@ -233,20 +233,7 @@ export default {
 		let that = this;
 		// 增加事件
 		$(".nav-item").on("click", function (e) {
-			let to = $(e.currentTarget).attr("to");
-			let href = window.location.href.split("#")[1];
-
-			// 特殊情况：首页
-			if (to == "/") {
-				if (href != "/") {
-					that.$router.push("/");
-					return;
-				}
-			}
-
-			if (href.indexOf(to) < 0) {
-				that.$router.push($(e.currentTarget).attr("to"));
-			}
+			that.$router.push($(e.currentTarget).attr("to"));
 		});
 	},
 	watch: {
@@ -280,20 +267,8 @@ export default {
 			let that = this;
 			setTimeout(() => {
 				$(".nav-item").on("click", function (e) {
-					let to = $(e.currentTarget).attr("to");
-					let href = window.location.href.split("#")[1];
 					that.menuShow = false;
-					// 特殊情况：首页
-					if (to == "/") {
-						if (href != "/") {
-							that.$router.push("/");
-							return;
-						}
-					}
-
-					if (href.indexOf(to) < 0) {
-						that.$router.push($(e.currentTarget).attr("to"));
-					}
+					that.$router.push($(e.currentTarget).attr("to"));
 				});
 			}, 100);
 		},
