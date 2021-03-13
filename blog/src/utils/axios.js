@@ -26,6 +26,7 @@ instance.interceptors.response.use(
         }
     },
     error => {
+        window.layer.msg('加载失败，网络错误')
         return Promise.reject(error.response) // 返回接口返回的错误信息
     });
 

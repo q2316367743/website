@@ -1,19 +1,10 @@
-// 基础服务，获取一些网站基本信息
-
-import axios from '@/utils/axios'
-
-/**
- * 获取作者信息
- * 
- */
-export function getAdmin(success) {
-    axios({
-        url: '/base/admin',
-        method: 'GET'
-    }).then(res => {
-        success(res.data)
-    }).catch(function() {
-        success({
+module.exports = function(app) {
+    /*返回json字符串*/
+    app.all('/api/base/admin', function(req, res) {
+        /**
+         * mockjs中属性名‘|’符号后面的属性为随机属性，数组对象后面的随机属性为随机数组数量，正则表达式表示随机规则，+1代表自增
+         */
+        res.json({
             success: true,
             code: 200,
             message: "成功",
@@ -26,33 +17,41 @@ export function getAdmin(success) {
                     gitee: "https://gitee.com/qiaoshengda"
                 }
             }
-        })
+        });
     });
-}
 
-/**
- * 获取网站数据
- * 
- */
-export function getWebInfo(success) {
-    axios({
-        url: '/base/blog/info',
-        method: 'GET'
-    }).then(res => {
-        success(res.data)
-    })
-}
+    app.all('/api/base/blog/info', function(req, res) {
+        /**
+         * mockjs中属性名‘|’符号后面的属性为随机属性，数组对象后面的随机属性为随机数组数量，正则表达式表示随机规则，+1代表自增
+         */
+        res.json({
+            success: true,
+            code: 200,
+            message: 'success',
+            data: {
+                item: {
+                    articleCount: 11,
+                    tagCount: 22,
+                    classifyCount: 3,
+                    notices: [
+                        '<a target="_blank" href="https://www.baidu.com">百度</a>',
+                        '网站测试通知，预祝网站成功完成',
+                    ],
+                    runTime: '1',
+                    personCount: 2,
+                    AllCount: 15,
+                    accessCount: 1,
+                    lastUpdate: '2021-02-22'
+                }
+            }
+        });
+    });
 
-
-export function getBaseInfo(success) {
-    axios({
-        url: '/base/config',
-        method: 'GET'
-    }).then(res => {
-        success(res.data)
-    }).catch(function() {
-        console.log('-----------------sssssssssssss-------------')
-        success({
+    app.all('/api/base/config', function(req, res) {
+        /**
+         * mockjs中属性名‘|’符号后面的属性为随机属性，数组对象后面的随机属性为随机数组数量，正则表达式表示随机规则，+1代表自增
+         */
+        res.json({
             success: true,
             code: 200,
             message: "成功",
@@ -109,6 +108,6 @@ export function getBaseInfo(success) {
                     }]
                 }
             }
-        })
+        });
     });
 }

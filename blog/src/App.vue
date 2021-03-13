@@ -193,6 +193,7 @@ export default {
 	mounted() {
 		//获取基本信息
 		getBaseInfo((res) => {
+			console.log(res)
 			if (res.success) {
 				let baseInfo = res.data.item;
 				new APlayer({

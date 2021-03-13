@@ -1,78 +1,63 @@
-// import axios from '../utils/axios'
+import axios from '@/utils/axios'
 
 /**
- * 获取评论
+ * 根据文章ID获取评论
+ * 
+ * @param {String} id 文章ID
+ * @param {Function} success 成功回调
  */
-export function getComment(success) {
-    success({
-        success: true,
-        code: 200,
-        message: 'success',
-        data: {
-            items: [{
-                id: '1',
-                email: '1583720084@qq.com',
-                nickname: '浅梦凉城',
-                website: 'javascript:;',
-                type: '1',
-                brower: 'Edge 86.0.622.51',
-                system: 'Windows 10.0',
-                createTime: '2021-02-03',
-                content: '真强',
-                reply: {
-                    id: '3',
-                    email: '2316367743@qq.com',
-                    nickname: '落雨不悔',
-                    website: 'javascript:;',
-                    type: '3',
-                    target: {
-                        nickname: '落雨不悔',
-                        website: 'javascript:;',
-                    },
-                    brower: 'Edge 86.0.622.51',
-                    system: 'Windows 10.0',
-                    createTime: '2021-02-03',
-                    content: '真强',
-                }
-            }, {
-                id: '1',
-                email: '1583720084@qq.com',
-                nickname: '剑锋寒',
-                website: 'javascript:;',
-                type: '2',
-                brower: 'Edge 86.0.622.51',
-                system: 'Windows 10.0',
-                createTime: '2021-02-03',
-                content: '真强'
-
-            }],
-            total: 2,
-        }
-    });
+export function getComment(id, success) {
+    axios({
+        url: `/blog/comment/${id}`,
+        method: 'GET'
+    }).then(res => {
+        success(res.data)
+    })
 }
 
 /**
  * 新增评论
+ * 
+ * @param {Object} data
+ * 
+ * @param {String} brower 浏览器版本
+ * @param {String} content 评论内容
+ * @param {String} email 邮箱
+ * @param {String} nickname 昵称
+ * @param {String} system 系统版本
+ * @param {String} website 个人网站
+ * 
+ * @param {Function} success 成功回调
  */
 export function addComment(data, success) {
-    data = null;
-    success({
-        success: true,
-        code: 200,
-        message: 'success',
-        data: {}
-    });
+    axios({
+        url: '/blog/comment',
+        method: 'POST',
+        data: data
+    }).then(res => {
+        success(res.data)
+    })
 }
 
 /**
  * 回复评论
+ * 
+ * @param {Object} data 参数
+ * 
+ * @param {String} brower 浏览器版本
+ * @param {String} content 评论内容
+ * @param {String} email 邮箱
+ * @param {String} nickname 昵称
+ * @param {String} system 系统版本
+ * @param {String} website 个人网站
+ * @param {String} commentId 评论ID
  */
 export function addReply(data, success) {
-    data = null;
-    success({
-        success: true,
-        code: 200,
-        message: 'success',
-        data: {}
-    });
+    axios({
+        url: '/blog/comment/reply',
+        method: 'POST',
+        data: data
+    }).then(res => {
+        success(res.data)
+    })
 }

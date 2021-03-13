@@ -39,6 +39,15 @@
 						<el-card
 							shadow="hover"
 							class="item"
+							v-if="articles.length == 0"
+						>
+							<div style="text-align: center;line-height: 242px;font-size: 36px;">
+								没有文章
+							</div>
+						</el-card>
+						<el-card
+							shadow="hover"
+							class="item"
 							v-for="(article, index) in articles"
 							:key="index"
 						>

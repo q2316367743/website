@@ -274,7 +274,7 @@
 								</el-col>
 							</el-row>
 							<el-row
-								v-if="comment.reply"
+								v-if="comment.reply && comment.reply.nickname"
 								style="margin-top: 40px"
 							>
 								<el-col
@@ -478,6 +478,8 @@ export default {
 			replyDialogIndex: -1,
 			comments: [],
 			total: 0,
+			step: 0,
+			loading: null,
 		};
 	},
 	created() {
@@ -489,19 +491,27 @@ export default {
 				this.article = res.data.article;
 				this.catalog = res.data.catalog;
 				this.createCatalog();
-			}else{
-				window.layer.alert('文章错误');
+				this.step++;
+			} else {
+				window.layer.alert("文章错误");
 				this.$router.go(-1);
 			}
 		});
-		getComment((res) => {
+		getComment(this.$route.params.id, (res) => {
 			if (res.success) {
 				this.comments = res.data.items;
 				this.total = res.data.total;
+				this.step += 2;
 			}
 		});
 	},
 	mounted() {
+		this.loading = this.$loading({
+			lock: true,
+			text: "Loading",
+			spinner: "el-icon-loading",
+			background: "rgba(0, 0, 0, 0.7)",
+		});
 		// 监听窗口大小
 		this.getWindow();
 		window.onresize = this.getWindow;
@@ -542,8 +552,32 @@ export default {
 			}
 		}, 100);
 		highlightCode();
-		// 增加复制事件
-		// 给每一个pre设置事件
+		// 确定当前步骤
+		let count = 0;
+		let inter = setInterval(()=>{
+			if(that.step == 3){
+				that.loading.close();
+				clearInterval(inter);
+			}
+			if(count == 4){
+				if(that.step == 0){
+					window.layer.msg('文章加载失败');
+					that.$router.go(-1);
+				}
+				if(that.step == 1){
+					window.layer.alert('评论加载失败', function(){
+						that.$router.go(-1);
+					})
+				}
+				if(that.step == 2){
+					window.layer.msg('文章加载失败');
+					that.$router.go(-1);
+				}
+				that.loading.close();
+				clearInterval(inter);
+			}
+			count++;
+		}, 500)
 	},
 	updated() {
 		highlightCode();

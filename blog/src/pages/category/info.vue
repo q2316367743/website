@@ -112,10 +112,10 @@ export default {
 			limit: 10,
 			total: 0,
 			articles: [],
-            info: {
-                id: '',
-                name: ''
-            }
+			info: {
+				id: "",
+				name: "",
+			},
 		};
 	},
 	created() {
@@ -143,14 +143,14 @@ export default {
 		},
 		getArticle() {
 			getByCategory(
+				this.$route.params.id,
 				{
-                    id: this.$route.params.id,
 					page: this.page,
 					limit: this.limit,
 				},
 				(res) => {
 					if (res.success) {
-                        this.info = res.data.item;
+						this.info = res.data.item;
 						this.articles = res.data.items;
 						this.total = res.data.total;
 					}
